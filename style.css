@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+.start-screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Title */
+.title {
+    position: absolute;
+    top: .025%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 625px;
+}
+
+/* Sprites */
+.sprite {
+    position: absolute;
+    bottom: 5%;
+    height: 200px;
+}
+
+.darkrai {
+    left: 5%;
+    transform: scaleX(-1);
+}
+
+.pikachu {
+    left: 30%;
+    height: 150px;
+}
+
+.gengar {
+    right: 30%;
+    height: 170px;
+}
+
+.giratina {
+    right: 5%;
+    height: 230px;
+}
+
+.play-button {
+    position: absolute;
+    top: 67%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.3s, box-shadow 0.3s;
+}
+
+.play-button:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    filter: brightness(1.2);
+    box-shadow: 0 0 25px #ffd60a,
+                0 0 50px #ffafcc,
+                0 0 75px #a2d2ff;
+}

@@ -1,0 +1,80 @@
+/* ===== WORD SEARCH BACKGROUND ===== */
+
+.wordsearch-body {
+    margin: 0;
+    background-image: url("wordsearchbg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Comic Sans MS', cursive;
+}
+
+/* Main container */
+.game-area {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Puzzle floating box */
+.puzzle-container {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px #ffafcc;
+    text-align: center;
+}
+
+/* Grid styling (keep your previous grid style but slightly transparent) */
+#grid {
+    display: grid;
+    grid-template-columns: repeat(12, 30px);
+    gap: 5px;
+    justify-content: center;
+    margin: 15px auto;
+}
+
+/* Bottom Pokémon row */
+.bottom-sprites {
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+}
+
+/* Left side Pokémon */
+.sprite-left {
+    position: absolute;
+    left: 5%;
+    height: 120px;
+}
+
+.sprite-left.small {
+    left: 15%;
+    height: 90px;
+}
+
+.sprite-left.small2 {
+    left: 25%;
+    height: 100px;
+}
+
+/* Right side Pokémon */
+.sprite-right {
+    position: absolute;
+    right: 25%;
+    height: 130px;
+}
+
+.sprite-right.big {
+    right: 5%;
+    height: 180px;
+}
+
+/* Slight pixel effect */
+img {
+    image-rendering: pixelated;
+}

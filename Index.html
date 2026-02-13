@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PokeLove Quest</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="start-screen">
+    <!-- Moving Clouds -->
+     <div class="cloud cloud1"></div>
+     <div class="cloud cloud2"></div>
+     <div class="cloud cloud3"></div>
+     
+    <!-- Background -->
+    <img src="MainBG.jpg" class="background">
+
+    <!-- Title -->
+    <img src="PokeLove Quest.png" class="title">
+
+    <!-- Sprites -->
+    <img src="darkrai.webp" class="sprite darkrai">
+    <img src="pikachu.webp" class="sprite pikachu">
+    <img src="gengar.webp" class="sprite gengar">
+    <img src="giratina.webp" class="sprite giratina">
+
+    <!-- Play Button -->
+    <img src="PlayButton.png" class="play-button" onclick="startGame()">
+</div>
+
+<script>
+function startGame() {
+    window.location.href = "wordsearch.html"; 
+}
+</script>
+
+</body>
+</html>

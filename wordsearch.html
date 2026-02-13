@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Love Quest 💖</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  background:url("wordsearchbg.png") center/cover no-repeat fixed;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+}
+
+/* DARK GLASS EFFECT */
+.overlay{
+  width:100%;
+  height:100%;
+  backdrop-filter: blur(6px);
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.game{
+  width:95%;
+  max-width:1200px;
+}
+
+/* TITLE */
+h1{
+  text-align:center;
+  margin-bottom:20px;
+  font-size:28px;
+  color:#ffffff;
+  text-shadow:0 0 15px #437ac1;
+}
+
+/* LAYOUT */
+.wrapper{
+  display:flex;
+  gap:40px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(14, 38px);
+  gap:4px;
+}
+
+.cell{
+  width:38px;
+  height:38px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
+  font-size:18px;
+  background:#ffc90588;
+  border:1px solid #ffffff;
+  color:#1c314d;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.cell:hover{
+  background:#437ac1;
+  color:black;
+}
+
+.cell.selected{
+  background:#690303;
+  color:white;
+  box-shadow:0 0 10px #690303;
+}
+
+.cell.found{
+  background:#ee2020;
+  color:black;
+  box-shadow:0 0 10px #690303;
+}
+
+/* QUESTIONS */
+.questions{
+  max-width:350px;
+  font-size:14px;
+}
+
+.questions h2{
+  color:#b10b0b;
+  margin-bottom:10px;
+}
+
+.question{
+  margin-bottom:8px;
+}
+
+.question.found{
+  text-decoration:line-through;
+  color:#690303;
+}
+
+/* BUTTONS */
+.buttons{
+  text-align:center;
+  margin-top:20px;
+}
+
+button{
+  padding:12px 25px;
+  margin:5px;
+  border:none;
+  border-radius:8px;
+  background:#ff00aa;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 10px #ff00aa;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#00f7ff;
+  box-shadow:0 0 15px #00f7ff;
+}
+
+/* LOVE LETTER PAGE */
+.love-letter{
+  display:none;
+  /* Center the letter on screen */
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90%;
+  max-width:800px;
+  text-align:center;
+  padding:40px 30px;
+  background:rgba(0,0,0,0.55);
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  animation:fadeIn 1s ease forwards;
+  z-index:50;
+}
+
+.love-letter h2{
+  font-size:30px;
+  color:#f3b0dd;
+  text-shadow:0 0 15px #f575ca;
+  margin-bottom:20px;
+}
+
+.love-letter p{
+  font-size:18px;
+  max-width:600px;
+  margin:0 auto;
+  line-height:1.6;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+/* CONFETTI */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="overlay">
+
+<div class="game" id="gameScreen">
+
+<h1>LOVE QUEST: FIND THE ANSWERS ❤️</h1>
+
+<div class="wrapper">
+
+<div class="grid" id="grid"></div>
+
+<div class="questions">
+<h2>Mission Objectives</h2>
+
+<div class="question" data-word="BABY">1. My favourite nickname for you?</div>
+<div class="question" data-word="CHERRY">2. My favourite fruit?</div>
+<div class="question" data-word="SMILE">3. My favourite thing about you?</div>
+<div class="question" data-word="CATS">4. My favourite animal?</div>
+<div class="question" data-word="NOVEMBER">5. When we started dating?</div>
+<div class="question" data-word="SHARJAH">6. Where I grew up?</div>
+<div class="question" data-word="MONSOON">7. My favourite weather?</div>
+<div class="question" data-word="BLUE">8. My favourite colour?</div>
+<div class="question" data-word="ALAN">9. Amal's favourite person?</div>
+<div class="question" data-word="AMAL">10. Your favourite person?</div>
+<div class="question" data-word="JAMES">11. What Salman calls me?</div>
+
+</div>
+
+</div>
+
+<div class="buttons">
+</div>
+
+<!-- Unlock button is hidden until all questions are found -->
+<div class="buttons">
+  <button id="unlockBtn" onclick="goToLetter()" style="display:none">Unlock Love Letter ❤️</button>
+</div>
+</div>
+
+</div>
+
+<div class="love-letter" id="letterScreen">
+<h2>You Completed Love Quest 💖</h2>
+<p>
+You solved every clue, just like you solved your way into my heart.
+You are my favourite person, my safe place, my comfort,
+my happiness, and my forever.
+No puzzle could ever be harder than trying to describe how much I love you.
+I am so happy we found each other, and I can't wait to spend the rest of my life with you.
+I am so sorry that I broke your heart before, but I promise to spend every day making it up to you.
+I love you more than words can say, and I will always cherish you and our love.
+You are my everything, and I am so grateful to have you in my life.
+I love you soooo much you mean the world to me and I can't wait for the day I can marry you
+and be with you forever. Happy Valentine's Day, my sweetheart! 💗💗💗
+</p>
+</div>
+
+</div>
+
+<script>
+const words=[
+"BABY","CHERRY","SMILE","CATS",
+"NOVEMBER","SHARJAH","MONSOON",
+"BLUE","ALAN","AMAL","JAMES"
+];
+
+const size=14;
+const gridEl=document.getElementById("grid");
+let grid=Array(size).fill().map(()=>Array(size).fill(""));
+
+function randLetter(){
+  const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  return letters[Math.floor(Math.random()*letters.length)];
+}
+
+const directions=[[0,1],[1,0],[1,1],[-1,1]];
+
+function place(word){
+  let placed=false;
+  while(!placed){
+    let dir=directions[Math.floor(Math.random()*directions.length)];
+    let row=Math.floor(Math.random()*size);
+    let col=Math.floor(Math.random()*size);
+    let fits=true;
+
+    for(let i=0;i<word.length;i++){
+      let r=row+i*dir[0];
+      let c=col+i*dir[1];
+      if(r<0||c<0||r>=size||c>=size||(grid[r][c]&&grid[r][c]!==word[i])){
+        fits=false; break;
+      }
+    }
+
+    if(fits){
+      for(let i=0;i<word.length;i++){
+        grid[row+i*dir[0]][col+i*dir[1]]=word[i];
+      }
+      placed=true;
+    }
+  }
+}
+
+words.forEach(place);
+
+for(let r=0;r<size;r++){
+  for(let c=0;c<size;c++){
+    if(!grid[r][c]) grid[r][c]=randLetter();
+  }
+}
+
+let selected=[],found=[];
+
+grid.forEach((row,r)=>{
+  row.forEach((letter,c)=>{
+    let div=document.createElement("div");
+    div.className="cell";
+    div.textContent=letter;
+
+    div.onmousedown=()=>{
+      selected=[];
+      clearSel();
+      select(div);
+      document.onmouseup=checkSel;
+    };
+
+    div.onmouseover=()=>{
+      if(document.onmouseup) select(div);
+    };
+
+    gridEl.appendChild(div);
+  });
+});
+
+function select(cell){
+  if(!selected.includes(cell)){
+    selected.push(cell);
+    cell.classList.add("selected");
+  }
+}
+
+function clearSel(){
+  document.querySelectorAll(".cell").forEach(c=>c.classList.remove("selected"));
+}
+
+function checkSel(){
+  document.onmouseup=null;
+  let word=selected.map(c=>c.textContent).join("");
+  let rev=word.split("").reverse().join("");
+
+  if(words.includes(word)&&!found.includes(word)){
+    mark(word);
+  } else if(words.includes(rev)&&!found.includes(rev)){
+    mark(rev);
+  }
+  clearSel();
+}
+
+function mark(word){
+  found.push(word);
+  selected.forEach(c=>c.classList.add("found"));
+
+  document.querySelectorAll(".question").forEach(q=>{
+    if(q.dataset.word===word) q.classList.add("found");
+  });
+
+  if(found.length===words.length){
+    // All words found: launch confetti and reveal the unlock button
+    launchConfetti();
+    const unlockBtn = document.getElementById('unlockBtn');
+    if(unlockBtn){
+      unlockBtn.style.display = 'inline-block';
+      unlockBtn.focus();
+    }
+  }
+}
+
+function goToLetter(){
+  document.getElementById("gameScreen").style.display="none";
+  document.getElementById("letterScreen").style.display="block";
+}
+
+/* CONFETTI */
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let pieces=[];
+function launchConfetti(){
+  for(let i=0;i<200;i++){
+    pieces.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height,
+      r:Math.random()*6+2
+    });
+  }
+  draw();
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#ff00aa";
+  pieces.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y+=3;
+    if(p.y>canvas.height) p.y=0;
+  });
+  requestAnimationFrame(draw);
+}
+</script>
+
+</body>
+</html>
